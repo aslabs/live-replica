@@ -98,6 +98,11 @@ class PatchDiff extends EventEmitter {
         this._applyObject(this._data, utils.wrapByPath({[this.options.spliceKeyword]: {index, itemsToRemove, itemsToAdd}}, path), '', options, 0);
     }
 
+    /**
+     * @param {string|Function} path - optional replica path. If path not provided, can be used as callback param.
+     * @param {Function} [callback]
+     * @returns {Object} - the underlying data of replica
+     * */
     get(path, callback) {
 
         if (typeof path === 'function') {
@@ -108,7 +113,6 @@ class PatchDiff extends EventEmitter {
         const fullPath = utils.concatPath(this._path, path);
         if (fullPath && (!_.isString(fullPath))) {
             debug('invalid path, cannot get');
-
             return;
         }
 
