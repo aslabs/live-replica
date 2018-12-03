@@ -88,6 +88,13 @@ function get(target, path) {
 const PatcherProxy = {
     proxies: new WeakMap(),
     proxyProperties: new WeakMap(), // meta tracking properties for the proxies
+    /**
+     * @param {Replica} patcher
+     * @param {string} path
+     * @param {Proxy=} root
+     * @param {boolean} readonly - if readonly, proxy will throw an error when set or deleteProperty from replica
+     * @returns {Proxy<Object>} Proxy of replica data
+     * */
     create(patcher, path, root, readonly) {
         let patcherRef = patcher.get(path);
 
@@ -319,7 +326,7 @@ const PatcherProxy = {
         if (properties.isArray && arrayMutationMethods[name]) {
             return this.getOrCreateArrayMethod(proxy, target, name, readonly);
         }
-        
+
         let root = this.getRoot(proxy);
         let fullPath = this.getPath(proxy, name);
         let deleteValue = properties.patcher.options.deleteKeyword;
@@ -417,7 +424,7 @@ const PatcherProxy = {
             };
         }.bind(proxy);
     },
-    
+
     commit(proxy, immediate = false) {
         let properties = this.proxyProperties.get(proxy);
 

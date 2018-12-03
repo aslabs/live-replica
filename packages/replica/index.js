@@ -6,4 +6,7 @@
 import Replica from "./replica";
 export default Replica;
 */
+/**
+ * @module @live-replica/live-replica/replica
+ */
 module.exports = require('./replica');
