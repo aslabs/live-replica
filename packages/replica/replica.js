@@ -153,6 +153,12 @@ class Replica extends PatchDiff {
         }
     }
 
+    remove(path, options = {}) {
+        if (this.options.readonly === false) {
+            options.local = true;
+            super.remove(path, options);
+        }
+    }
 
     unsubscribeRemote() {
         if (!this.connection) { return; }
@@ -211,6 +217,8 @@ class Replica extends PatchDiff {
         });
     }
 }
+
+Replica.prototype.override = Replica.prototype.set;
 
 // export default Replica;
 module.exports = Replica;
